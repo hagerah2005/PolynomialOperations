@@ -1,0 +1,497 @@
+#include <iostream>
+#include "Polynomial_copilot.h"
+
+using namespace std;
+
+int main() {
+    // test1 -success
+    Polynomial p1({3, -4, 2});
+    cout << "Polynomial p1: " << p1 << endl;
+    cout << "Degree of p1: " << p1.degree() << endl;
+
+    //test2 // success
+    Polynomial p2({1, 5});
+    cout << "Polynomial p2: " << p2 << endl;
+    cout << "Degree of p2: " << p2.degree() << endl;
+
+    //test3 // success
+    Polynomial p3({2, -1, 3});
+    cout << "Polynomial p3: " << p3 << endl;
+    cout << "Degree of p3: " << p3.degree() << endl;
+
+
+    //test4 //Failed // No polynomial and degree must be zeros
+    Polynomial p4({0, 0, 0, 0});
+    cout << "Polynomial p4: " << p4 << endl;
+    cout << "Degree of p4: " << p4.degree() << endl;
+
+    //test5 // Failed //the term 0x^2 must not found
+    Polynomial p5({10, 0, 8e50});
+    cout << "Polynomial p5: " << p5 << endl;
+    cout << "Degree of p5: " << p5.degree() << endl;
+
+    //test6 //success
+    Polynomial p6;
+    cout << "Polynomial p6: " << p6 << endl;
+    cout << "Degree of p6: " << p6.degree() << endl;
+
+
+    Polynomial p7({10, 20, 5, -3,5});
+    cout << "Polynomial p7: " << p7 << endl;
+    Polynomial p8({-8, 7, 9, 1});
+    cout << "Polynomial p8: " << p8 << endl;
+    Polynomial p9({0, 2, 17, 23,62,-5});
+    cout << "Polynomial p9: " << p9 << endl;
+    // Operations between polynomials
+    cout << "\n first Operations between polynomials:" << endl;
+
+    Polynomial sum = p7 + p9;//test7 //success
+    cout << "p7 + p9: " << sum << endl;
+    Polynomial difference = p8 - p7;//test8 //success
+    cout << "p8 - p7: " << difference << endl;
+    Polynomial product = p9 * p8;//test9 //success
+    cout << "p9 * p8: " << product << endl;
+
+
+    Polynomial p10({11, 1, -14, 5, -5, 13, 7, -11, 15, -13});
+    cout << "Polynomial p10: " << p10 << endl;
+    Polynomial p11({6, -5, 12, -7, 4, 8, 11, -1, 13, -4});
+    cout << "Polynomial p11: " << p11 << endl;
+
+    // Operations between polynomials
+    cout << "\n Second Operations between polynomials:" << endl;
+    Polynomial sum2 = p10 + p11;//test10 //success
+    cout << "p10 + p11: " << sum2 << endl;
+    Polynomial difference2 = p10 - p11;//test11 //success
+    cout << "p10 - p11: " << difference2 << endl;
+    Polynomial product2 = p10 * p11;//test12 //success
+    cout << "p10 * p11: " << product2 << endl;
+
+    Polynomial p12({-10e10,20,20e3000});
+    cout << "Polynomial p12: " << p12 << endl;
+    Polynomial p13({0,-500});
+    cout << "Polynomial p13: " << p13 << endl;
+
+    // Operations between polynomials
+    cout << "\n Third Operations between polynomials:" << endl;
+    Polynomial sum3 = p12 + p13;//test13 //Failed //infinity on first term
+    cout << "p12 + p13: " << sum3 << endl;
+    Polynomial difference3 = p12 - p13;//test14 //Failed //infinity in first term
+    cout << "p12 - p13: " << difference3 << endl;
+    Polynomial product3 = p12 * p13;//test15 //Failed //negative infinity in first tem & nan in the second term
+    cout << "p12 * p13: " << product3 << endl;
+
+
+
+    // Equality check
+    cout << "\n Equality check:" << endl;
+    Polynomial p14({0,15,500});
+    cout << "Polynomial p14: " << p14 << endl;
+    Polynomial p15({15,-25});
+    cout << "Polynomial p15: " << p15 << endl;
+    Polynomial p16({15,-25});
+    cout << "Polynomial p16: " << p16 << endl;
+    cout << "p14 == p15: " << (p14 == p15) << endl;   //test16 // success
+    cout << "p15 == p16: " << (p15 == p16) << endl;   //test17 // success
+    cout << "p14 == p16: " << (p14 == p16) << endl;   //test18 // success
+
+
+
+
+    // Evaluate polynomial
+    Polynomial p17({2e50,5e50});
+    cout << "Polynomial p17: " << p17 << endl;
+    double evaluationPoint = 3;
+    cout << "\np17 evaluated at x = " << evaluationPoint << ": " << p17.evaluate(evaluationPoint) << endl; //test19 //success
+
+    Polynomial p18({2e500,5e50});
+    cout << "Polynomial p18: " << p18 << endl;
+    double evaluatPoint = 5e200;
+    cout << "\np18 evaluated at x = " << evaluatPoint << ": " << p18.evaluate(evaluatPoint) << endl;//test20 //Failed //constant not infinity
+
+    // Derivative
+    Polynomial p19({15,15,20});
+    cout << "Polynomial p19: " << p19 << endl;
+    cout << "\nDerivative of p19: " << p19.derivative() << endl; // test21 //success
+    Polynomial p20({15, 6, -8, 0, -7});
+    cout << "Polynomial p20: " << p20 << endl;
+    cout << "\nDerivative of p20: " << p20.derivative() << endl; //test22 //Failed //term 0x^2 must not found
+    Polynomial p21({0,20e500});
+    cout << "Polynomial p21: " << p21 << endl;
+    cout << "\nDerivative of p21: " << p21.derivative() << endl;//test23 //failed //should give constant not infinity
+
+    // Integral
+    Polynomial p22({5, -1, 3, -10, 9, 3, -1, -2, -9, 15, 9});
+    cout << "Polynomial p22: " << p22 << endl;
+    cout << "Integral of p22: " << p22.integral() << endl;//test24 //success
+    Polynomial p23({0,0});
+    cout << "Polynomial p23: " << p23 << endl;
+    cout << "Integral of p23: " << p23.integral() << endl;//test25 //failed //must equal zero
+    Polynomial p24({0,20e2});
+    cout << "Polynomial p24: " << p24 << endl;
+    cout << "Integral of p24: " << p24.integral() << endl;//test26 //failed //term 0x^1 must not found
+
+
+    // Definite integral
+    Polynomial p25({-11, 10, -14, -14, 0, -9, -7, 13});
+    cout << "Polynomial p25: " << p25 << endl;
+    double integralResult = p25.integral(0, 1);
+    cout << "Definite integral of p25 from 0 to 1: " << integralResult << endl; // test27 //success
+
+    Polynomial p26({10,5,65});
+    cout << "Polynomial p26: " << p26 << endl;
+    double integResult = p26.integral(5, 5);
+    cout << "Definite integral of p26 from 5 to 5: " << integResult << endl;//test28 //success
+
+    Polynomial p27({0,0,0,0});
+    cout << "Polynomial p27: " << p27 << endl;
+    double integ_Result = p27.integral(-500e200,500e200);
+    cout << "Definite integral of p27 from -500e200 to 500e200: " << integ_Result << endl;//test29 //failed //must be zero
+
+    Polynomial p28({10,50});
+    cout << "Polynomial p28: " << p28 << endl;
+    double int_Result = p28.integral(-1,10);
+    cout << "Definite integral of p28 from -1 to 10: " << int_Result << endl;//test30 //success
+
+    // Composition of polynomials
+    Polynomial p29({1,2});
+    cout << "Polynomial p29: " << p29 << endl;
+    Polynomial p30({-2,5,8});
+    cout << "Polynomial p30: " << p30 << endl;
+
+    Polynomial comp = p29.compose(p30);
+    cout << "Composition of p29 with p30: " << comp << endl;//test31 //success
+
+    Polynomial p31({2e200,5000});
+    cout << "Polynomial p31: " << p31 << endl;
+    Polynomial p32({-2,5,8});
+    cout << "Polynomial p32: " << p32 << endl;
+
+    Polynomial compo = p32.compose(p31);
+    cout << "Composition of p32 with p31: " << compo << endl;//test32 //Failed //term 3 must be constant not infinity
+
+    Polynomial p_32({0,1,0});
+    cout << "Polynomial p32: " << p_32 << endl;
+    Polynomial p33({1,0});
+    cout << "Polynomial p33: " << p33 << endl;
+
+    Polynomial composition = p_32.compose(p33);
+    cout << "Composition of p_32 with p33: " << composition << endl;//test33 //SUCCESS
+
+    Polynomial p34({0,0,2e2588});
+    cout << "Polynomial p34: " << p34 << endl;
+    Polynomial p35({1,5});
+    cout << "Polynomial p35: " << p35 << endl;
+
+    Polynomial composition_2 = p34.compose(p35);
+    cout << "Composition of p34 with p35: " << composition_2 << endl;//test33 //Failed //big coefficient denoted as infinity
+
+    // Root finding
+    Polynomial p36({-4,8,11});
+    cout << "Polynomial p36: " << p36 << endl;
+    double root = p36.getRoot(1,1e-6,10000);
+    cout << "Root of p36 : " << root << endl;//test34 //success
+
+    Polynomial p37({1,0,1});
+    cout << "Polynomial p37: " << p37 << endl;
+    double root2 = p37.getRoot(1,1e-6,10000);
+    cout << "Root of p37 : " << root2 << endl;//test35 //failed //root must be i or -i
+
+    Polynomial p38({15});
+    cout << "Polynomial p38: " << p38 << endl;
+    double root3 = p38.getRoot(1,1e-6,10000);
+    cout << "Root of p38 : " << root3 << endl; //test 36 //failed //no root
+
+    Polynomial p39({-1,-2,-5});
+    cout << "Polynomial p39: " << p39 << endl;
+    double root4 = p39.getRoot(1,1e-6,10000);
+    cout << "Root of p39 : " << root4 << endl;//test37 //failed //it must be imaginary numbers not real
+
+    Polynomial p40({0,1});
+    cout << "Polynomial p40: " << p40 << endl;
+    double root5 = p40.getRoot(1,1e-6,10000);
+    cout << "Root of p40 : " << root5 << endl;//test38 //success
+
+    Polynomial p41({-14, -5, 8, -5, 0, -7, 6, 4, 1, 15});
+    cout << "Polynomial p41: " << p41 << endl;
+    double root6 = p41.getRoot(1,1e-6,10000);
+    cout << "Root of p41 : " << root6 << endl;//test39 //success
+
+    Polynomial p42({-14, -5, 8, -5, 0, -7, 6,2000e7000});
+    cout << "Polynomial p42: " << p42 << endl;
+    double root7 = p42.getRoot(1,1e-6,10000);
+    cout << "Root of p42 : " << root7 << endl;//test40 //failed //nan because of big numbers
+
+    // Get coefficient
+    Polynomial p43({-14, -5, 8, -5, 0, -7});
+    cout << "Polynomial p43: " << p43 << endl;
+    double coefficient = p43.getCoefficient(4); // Coefficient of x^4
+    cout << "Coefficient of x^4 in p43: " << coefficient << endl;//test41 //success
+
+    Polynomial p44({-14});
+    cout << "Polynomial p44: " << p44 << endl;
+    double coefficient2 = p44.getCoefficient(3);
+    cout << "Coefficient of x^3 in p44: " << coefficient2 << endl;//test42 //success
+
+    Polynomial p45({17,-5,-25e2587});
+    cout << "Polynomial p45: " << p45 << endl;
+    double coefficient3 = p45.getCoefficient(2);
+    cout << "Coefficient of x^2 in p45: " << coefficient3 << endl;//test43 //failed //25e2587 not negative infinity
+
+    Polynomial p46({150,280});
+    cout << "Polynomial p46: " << p46 << endl;
+    double coefficient4 = p46.getCoefficient(1);
+    cout << "Coefficient of x^1 in p46: " << coefficient4 << endl;//test44 //success
+
+    // Set new coefficients
+    Polynomial p47({150,280});
+    cout << "Polynomial p47: " << p47 << endl;
+    p47.setCoefficients({4, 1, -5});
+    cout << "New p47: " << p47 << endl;
+    // Get new coefficient
+    double get_coefficient = p47.getCoefficient(2);
+    cout << "Coefficient of x^2 in new p47: " << get_coefficient << endl;//test 45 //success
+
+    Polynomial p48({10,170});
+    cout << "Polynomial p48: " << p48 << endl;
+    p48.setCoefficients({-2,-8000e400,50,80e20,987,6548e8527});
+    cout << "New p48: " << p48 << endl;
+    // Get new coefficient
+    double get_coefficient2 = p48.getCoefficient(5);
+    cout << "Coefficient of x^5 in new p48: " << get_coefficient2 << endl;//test46 //failed //coefficient 6548e8527 not infinity
+
+    Polynomial p49({5,8,21});
+    cout << "Polynomial p49: " << p49 << endl;
+    p49.setCoefficients({-5});
+    cout << "New p49: " << p49 << endl;
+    // Get new coefficient
+    double get_coefficient3 = p49.getCoefficient(0);
+    cout << "Coefficient of x^0 in new p49: " << get_coefficient3 << endl;//test47 //success
+
+    Polynomial p50({7, 0, -14, 2, 4, -11, -6, -14, 6});
+    cout << "Polynomial p50: " << p50 << endl;
+    p50.setCoefficients({0, 9, 15, 6, 0, 6, -8, 12, 13});
+    cout << "New p50: " << p50 << endl;
+    // Get new coefficient
+    double get_coefficient4 = p50.getCoefficient(7);
+    cout << "Coefficient of x^7 in new p50: " << get_coefficient4 << endl;//test48 //success
+
+    Polynomial p51({0});
+    cout << "Polynomial p51: " << p51 << endl;
+    p51.setCoefficients({15,87,1,0,});
+    cout << "New p51: " << p51 << endl;
+    // Get new coefficient
+    double get_coefficient5 = p51.getCoefficient(1);
+    cout << "Coefficient of x^1 in new p51: " << get_coefficient5 << endl;//test50 //success
+
+    //Second set 0f 50 cases
+
+    //Test 1 //fail // there is no polynomial
+    Polynomial p_1({0,0,0});
+    cout<<p_1<<endl;
+    cout<<p_1.degree()<<endl;
+
+    //Test 2 //success
+    Polynomial p_2;
+    cout<<p_2<<endl;
+    cout<<p_2.degree()<<endl;
+
+    //Test 3 //success
+    Polynomial p_3({-11 ,10 ,-14 ,-14 ,0 ,-9 ,-7 ,13});
+    cout<<p_3<<endl;
+    cout<<p_3.degree()<<endl;
+
+    //Test 4 //success
+    Polynomial p_4({-5, 13, -3, 0,  6, -11, -9});
+    cout<<p_4<<endl;
+    cout<<p_4.degree()<<endl;
+
+    //Test 5 Success
+    Polynomial p_5({0,-1,2});
+    cout<<p_5<<endl;
+    cout<< p_5.integral(-1,1)<<endl;
+
+    //Test 6 Success
+    Polynomial p_6({-10,13,21,4,5,6,7,1100,34532,18738});
+    cout<<p_6<<endl;
+    cout<<p_6.integral(17,27)<<endl;
+
+    //Test 7 Success
+    Polynomial p_7({1});
+    cout<<p_7<<endl;
+    cout<<p_7.integral(3,5)<<endl;
+
+    //Test 8 Success
+    Polynomial p_8({-10,13,21,4,5,6,7,1100,34532,18738,70,17,234,0,0,0,0,123});
+    cout<<p_8<<endl;
+    cout<<p_8.integral(-4000,700)<<endl;
+
+    //Test 9 Fail
+    Polynomial p_9({2,0,1});
+    cout<<p_9<<endl;
+    cout<<p_9.integral()<<endl;
+
+    //Test 10 Fail
+    Polynomial p_10({0,0,0});
+    cout<<p_10<<endl;
+    cout<<p_10.integral()<<endl;
+
+    //Test 11 Success
+    Polynomial p_11({2,14,-12,1,12,13,15,2,-9});
+    cout<<p_11<<endl;
+    cout<<p_11.integral()<<endl;
+
+    //Test 12 Success
+    Polynomial p_12({1});
+    cout<<p_12<<endl;
+    cout<<p_12.integral()<<endl;
+
+    //Test 13 Fail
+    Polynomial p_13();
+    cout<<p_13<<endl;
+
+    //Test 14
+    Polynomial p_14({-111111111.1221,1233,133526});
+    Polynomial p_15({1,23});
+    cout<<p_14<<endl<<p_15<<endl;
+    cout<<p_14+p_15<<endl;
+    //Test 15
+    cout<<p_15-p_14<<endl;
+
+    //Test 16 success
+    Polynomial p_16({501233.2132});
+    Polynomial p_17({0});
+    cout<<p_16<<endl<<p_17<<endl;
+    cout<<p_16+p_17<<endl;
+    //Test 17 success
+    cout<<p_17-p_16<<endl;
+
+    //Test 18 success
+    Polynomial p_18({1,3,33,2});
+    Polynomial p_19({-1,-3,-33,-2});
+    cout<<p_18<<endl<<p_19<<endl;
+    cout<<p_18+p_19<<endl;
+    //Test 19 success
+    cout<<p_18-p_19<<endl;
+
+    //Test 20 success
+    Polynomial p_20({1e308,-1e308});
+    Polynomial p_21({1e308,1e308});
+    cout<<p_20<<endl<<p_21<<endl;
+    cout<<p_20+p_21<<endl;
+    //Test 21 success
+    cout<<p_20-p_21<<endl;
+
+    //Test 22
+    Polynomial p_22({0});
+    Polynomial p_23({1,2});
+    cout<<p_22<<endl<<p_23<<endl;
+    cout<<p_22*p_23<<endl;
+
+    //Test 23
+    Polynomial p_24({1e308,1e308});
+    Polynomial p_25({4050452153055045,5056058630600552});
+    cout<<p_24<<endl<<p_25<<endl;
+    cout<<p_24*p_25<<endl;
+
+    //Test 24
+    Polynomial p_26({-2,-5});
+    Polynomial p_27({1,0,5});
+    cout<<p_26<<endl<<p_27<<endl;
+    cout<<p_26*p_27<<endl;
+
+    //Test 25
+    Polynomial p_28({1e308,1e308});
+    Polynomial p_29({4050452153055045,5056058630600552});
+    cout<<p_28<<endl<<p_29<<endl;
+    if(p_28==p_29)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
+    //Test 26
+    Polynomial p_30({1e308,1e308});
+    Polynomial p_31({1e308,1e308});
+    cout<<p_30<<endl<<p_31<<endl;
+    if(p_30==p_31)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
+    //Test 27
+    Polynomial p__32({0});
+    Polynomial p_33({0,0});
+    cout<<p__32<<endl<<p_33<<endl;
+    if(p__32==p_33)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
+    //Test 28
+    Polynomial p_34({0});
+    cout<<p_34<<endl<<p_34.evaluate(2)<<endl;
+    //Test 29
+    Polynomial p_35({1e308,1e307});
+    cout<<p_35<<endl<<p_35.evaluate(1e30)<<endl;
+    //Test 30
+    Polynomial p_36({8324,132,4221});
+    cout<<p_36<<endl<<p_36.evaluate(0)<<endl;
+
+    //Test 31
+    Polynomial p_37({1e308,1e308});
+    Polynomial p_38({1e308,1e308});
+    cout<<p_37<<endl<<p_38<<endl;
+    cout<<p_37.compose(p_38)<<endl;
+    //Test 32
+    Polynomial p_39({3,5});
+    Polynomial p_40({0,0,0});
+    cout<<p_39<<endl<<p_40<<endl;
+    cout<<p_39.compose(p_40)<<endl;
+    //Test 33
+    Polynomial p_41({1256,927,4725,352});
+    Polynomial p_42({425,589,735,213});
+    cout<<p_41<<endl<<p_42<<endl;
+    cout<<p_41.compose(p_42)<<endl;
+    //Test 34
+    Polynomial p422({3,5});
+    cout<<p422<<endl<<p422.getCoefficient(2)<<endl;
+    //Test 35
+    cout<<p422.getCoefficient(0)<<endl;
+    //Test 36
+    cout<<p422.getCoefficient(-1)<<endl;
+    //Test 37
+    cout<<p422.getCoefficient(1)<<endl;
+    //Test 38
+    cout<<p422.getCoefficient(-1e3)<<endl;
+
+    //Test 39
+    Polynomial p_43({0});
+    cout<<p_43<<endl<<p_43.derivative()<<endl;
+    //Test 40
+    Polynomial p_44({1e308});
+    cout<<p_44<<endl<<p_44.derivative()<<endl;
+    //Test 41
+    Polynomial p_45({1e308,0,0,0,0,0,0,0,1e308});
+    cout<<p_45<<endl<<p_45.derivative()<<endl;
+    //Test 42
+    Polynomial p_46({1e308,0,0,0,0,0,0,0,5e6});
+    cout<<p_46<<endl<<p_46.derivative()<<endl;
+    //Test 43
+    Polynomial p_47({1e308,100,5890,1063,5245,20,0,0,5e6});
+    cout<<p_47<<endl<<p_47.derivative()<<endl;
+    //Test 44
+    Polynomial p_48({1,3,1});
+    cout<<p_48<<endl<<p_48.getRoot(1,1e-6,10000)<<endl;
+    //Test 45
+    Polynomial p_49({1,-1,1});
+    cout<<p_49<<endl<<p_49.getRoot(1,1e-6,10000)<<endl;
+    //Test 46
+    Polynomial p_50({-1,0,1});
+    cout<<p_50<<endl<<p_50.getRoot(1,1e-6,10000)<<endl;
+    //Test 47
+    Polynomial p_51({-8,0,0,0,0,0,1});
+    cout<<p_51<<endl<<p_51.getRoot(1,1e-6,10000)<<endl;
+    //Test 48
+    Polynomial p_52({-5,0,-9,0,1});
+    cout<<p_52<<endl<<p_52.getRoot(1,1e-6,10000)<<endl;
+    //Test 49
+    Polynomial p_53({100,3,1});
+    cout<<p_53<<endl<<p_53.getRoot(1,1e-6,10000)<<endl;
+    //Test 50
+    Polynomial p_54({-66,0,9,0,-8,1});
+    cout<<p_54<<endl<<p_54.getRoot(1,1e-6,10000)<<endl;
+
+
+    return 0;
+}
